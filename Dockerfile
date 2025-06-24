@@ -21,4 +21,4 @@ WORKDIR /app
 EXPOSE 58846 8112
 VOLUME ["/config"]
 
-CMD ["deluged", "-c", "/config", "-d"]
+CMD ["deluge-web", "-c", "/config"]
