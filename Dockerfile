@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.11-slim
+FROM python:3.10-slim
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -11,7 +11,6 @@ RUN apt-get update && \
         python3-gi \
         python3-mako \
         python3-chardet \
-        python3-libtorrent \
         ca-certificates \
         locales \
         gcc \
@@ -27,6 +26,9 @@ COPY . /app
 
 # Ensure RELEASE-VERSION exists for build
 RUN echo "2.1.0.dev0" > RELEASE-VERSION
+
+# Install libtorrent Python bindings
+RUN pip install --no-cache-dir python-libtorrent
 
 # Install Deluge and its Python dependencies
 RUN pip install deluge[all]
