@@ -26,7 +26,7 @@ COPY . /app
 RUN echo "2.1.0.dev0" > RELEASE-VERSION
 
 # Install Deluge and its Python dependencies
-RUN pip install .[all]
+RUN pip install deluge[all]
 
 # Expose Deluge daemon and web UI ports
 EXPOSE 58846 8112
