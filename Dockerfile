@@ -22,6 +22,9 @@ WORKDIR /app
 # Copy the Deluge source code into the container
 COPY . /app
 
+# Ensure version.py exists for build
+RUN if [ ! -f deluge/version.py ]; then echo "__version__ = '2.1.0.dev0'" > deluge/version.py; fi
+
 # Install Deluge and its Python dependencies
 RUN pip install --no-cache-dir .
 
