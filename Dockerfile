@@ -14,7 +14,10 @@ RUN apt-get update && \
         python3-libtorrent \
         ca-certificates \
         locales \
-        && rm -rf /var/lib/apt/lists/*
+        gcc \
+        g++ \
+        python3-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
