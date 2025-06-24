@@ -22,14 +22,9 @@ WORKDIR /app
 # Copy the Deluge source code into the container
 COPY . /app
 
-# Ensure version.py exists for build
-RUN if [ ! -f deluge/version.py ]; then echo "__version__ = '2.1.0.dev0'" > deluge/version.py; fi
-
-# Ensure RELEASE-VERSION exists for build
-RUN echo "2.1.0.dev0" > RELEASE-VERSION
 
 # Install Deluge and its Python dependencies
-RUN pip install --no-cache-dir .
+RUN pip install .[all]
 
 # Expose Deluge daemon and web UI ports
 EXPOSE 58846 8112
