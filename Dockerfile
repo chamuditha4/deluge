@@ -1,43 +1,24 @@
-# Use an official Python runtime as a parent image
-FROM python:3.10-slim
+FROM debian:bookworm-slim
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install system dependencies
+# Install Deluge, libtorrent, and dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        python3-pip \
+        deluged \
+        deluge-web \
+        python3-libtorrent \
         python3-gi \
         python3-mako \
         python3-chardet \
         ca-certificates \
         locales \
-        gcc \
-        g++ \
-        python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the Deluge source code into the container
-COPY . /app
-
-# Ensure RELEASE-VERSION exists for build
-RUN echo "2.1.0.dev0" > RELEASE-VERSION
-
-# Install libtorrent Python bindings
-RUN pip install --no-cache-dir python-libtorrent
-
-# Install Deluge and its Python dependencies
-RUN pip install deluge[all]
-
-# Expose Deluge daemon and web UI ports
 EXPOSE 58846 8112
-
-# Create a volume for Deluge config/data
 VOLUME ["/config"]
 
-# Set the default command to run the Deluge daemon
 CMD ["deluged", "-c", "/config", "-d"]
